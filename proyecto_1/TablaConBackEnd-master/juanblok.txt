@@ -1,0 +1,184 @@
+create database FOGUEO
+
+USE FOGUEO
+
+CREATE TABLE Usuarios(
+UserID Int identity primary key,
+Nombre Varchar(25),
+Email Varchar(30),
+Direccion Varchar(20)
+);
+CREATE TABLE Productos(
+ProductoID Int identity Primary key,
+Nombre varchar(25),
+Link Varchar(70),
+Precio INT,
+Stock int
+);
+CREATE TABLE Compras(
+ComprasID int primary key, 
+fk_UserID Int,
+fk_ProductoID Int,
+FechaCompra datetime default GETDATE(),
+FOREIGN KEY (fk_UserID) REFERENCES Usuarios(UserID),
+FOREIGN KEY (fk_ProductoID) REFERENCES Productos(ProductoID)
+);
+
+Procedimientos almacenados de la tabla compras
+
+CREATE PROCEDURE Registrar_C
+    @ComprasID Int,
+    @ProductoID INT,
+    @UserID INT,
+    @FechaCompra DATETIME
+AS
+BEGIN
+    INSERT INTO Compras (ComprasID,fk_ProductoID, fk_UserID, FechaCompra)
+    VALUES (@ComprasID,@ProductoID, @UserID, @FechaCompra)
+END
+
+
+CREATE PROCEDURE Actualizar_C
+    @ComprasID INT,
+    @ProductoID INT,
+    @UserID INT,
+    @FechaCompra DATETIME
+AS
+BEGIN
+    UPDATE Compras
+    SET fk_ProductoID = @ProductoID, fk_UserID = @UserID, FechaCompra = @FechaCompra
+    WHERE ComprasID = @ComprasID
+END
+
+
+CREATE PROCEDURE Eliminar_C
+    @ComprasID INT
+AS
+BEGIN
+    DELETE FROM Compras
+    WHERE ComprasID = @ComprasID
+END
+
+
+CREATE PROCEDURE Listar_C
+AS
+BEGIN
+    SELECT ComprasID, fk_ProductoID AS ProductoID, fk_UserID AS UserID, FechaCompra
+    FROM Compras
+END
+
+
+CREATE PROCEDURE Consultar_C
+    @ComprasID INT
+AS
+BEGIN
+    SELECT ComprasID, fk_ProductoID AS ProductoID, fk_UserID AS UserID, FechaCompra
+    FROM Compras
+    WHERE ComprasID = @ComprasID
+END
+
+
+
+Procedimientos almacenados de usuarios
+
+CREATE PROCEDURE Registrar_Us
+    @Nombre NVARCHAR(25),
+    @Email NVARCHAR(30),
+    @Direccion NVARCHAR(20)
+AS
+BEGIN
+    INSERT INTO Usuarios (Nombre, Email, Direccion)
+    VALUES (@Nombre, @Email, @Direccion)
+END
+
+
+CREATE PROCEDURE Actualizar_Us
+    @UserID INT,
+    @Nombre NVARCHAR(25),
+    @Email NVARCHAR(30),
+    @Direccion NVARCHAR(20)
+AS
+BEGIN
+    UPDATE Usuarios
+    SET Nombre = @Nombre, Email = @Email, Direccion = @Direccion
+    WHERE UserID = @UserID
+END
+
+
+CREATE PROCEDURE Eliminar_Us
+    @UserID INT
+AS
+BEGIN
+    DELETE FROM Usuarios
+    WHERE UserID = @UserID
+END
+
+
+CREATE PROCEDURE Listar_Us
+AS
+BEGIN
+    SELECT UserID, Nombre, Email, Direccion
+    FROM Usuarios
+END
+
+
+CREATE PROCEDURE Consultar_Us
+    @UserID INT
+AS
+BEGIN
+    SELECT UserID, Nombre, Email, Direccion
+    FROM Usuarios
+    WHERE UserID = @UserID
+END
+
+
+procedimientos almacenados de prductos
+CREATE PROCEDURE Registrar_Us
+    @Nombre NVARCHAR(25),
+    @Email NVARCHAR(30),
+    @Direccion NVARCHAR(20)
+AS
+BEGIN
+    INSERT INTO Usuarios (Nombre, Email, Direccion)
+    VALUES (@Nombre, @Email, @Direccion)
+END
+
+
+CREATE PROCEDURE Actualizar_Us
+    @UserID INT,
+    @Nombre NVARCHAR(25),
+    @Email NVARCHAR(30),
+    @Direccion NVARCHAR(20)
+AS
+BEGIN
+    UPDATE Usuarios
+    SET Nombre = @Nombre, Email = @Email, Direccion = @Direccion
+    WHERE UserID = @UserID
+END
+
+
+CREATE PROCEDURE Eliminar_Us
+    @UserID INT
+AS
+BEGIN
+    DELETE FROM Usuarios
+    WHERE UserID = @UserID
+END
+
+
+CREATE PROCEDURE Listar_Us
+AS
+BEGIN
+    SELECT UserID, Nombre, Email, Direccion
+    FROM Usuarios
+END
+
+
+CREATE PROCEDURE Consultar_Us
+    @UserID INT
+AS
+BEGIN
+    SELECT UserID, Nombre, Email, Direccion
+    FROM Usuarios
+    WHERE UserID = @UserID
+END

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tabla con JavaScript</title>
+</head>
+<body>
+
+<button onclick="crearTabla()">Crear Tabla</button>
+<div id="tabla-container"></div>
+
+<script>
+  const apiUrl = 'https://localhost:44353/api/Productos';
+
+fetch(apiUrl)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`Error al obtener los datos. Código de estado: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(data => {
+    
+    
+  })
+  .catch(error => {
+    console.error('Ha ocurrido un error:', error);
+  });
+
+function crearTabla() {
+    // Crear elementos HTML
+    var tabla = document.createElement("table");
+    var tbody = document.createElement("tbody");
+    //let producto = [{nombre:"TV",precio: '2343'},{nombre:'Nevera',precio:'90889'}]
+
+    
+    data.forEach((Productos) => {
+    let fila = document.createElement("tr");
+        var celda = document.createElement("td");
+            celda.textContent = Productos.Nombre
+            fila.appendChild(celda);
+
+            tbody.appendChild(fila);
+            var celda = document.createElement("td");
+            celda.textContent = Productos.precio
+            fila.appendChild(celda);
+
+            tbody.appendChild(fila);
+
+    })
+
+    tabla.appendChild(tbody);
+
+    // Agregar la tabla al contenedor
+    var tablaContainer = document.getElementById("tabla-container");
+    tablaContainer.innerHTML = ""; // Limpiar el contenedor
+    tablaContainer.appendChild(tabla);
+
+}
+</script>
+
+</body>
+</html>
